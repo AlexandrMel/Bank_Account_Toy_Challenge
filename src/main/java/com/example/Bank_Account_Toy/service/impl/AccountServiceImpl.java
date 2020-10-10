@@ -9,9 +9,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Objects.isNull;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -61,7 +66,42 @@ public class AccountServiceImpl implements AccountService {
         AccountEntity updatedIban = accountRepository.save(foundAccount);
         BeanUtils.copyProperties(updatedIban, returnValue);
         return returnValue;
+    }
 
+    public AccountDto accountDeposit(AccountDto balanceDetails) {
 
+        AccountDto returnValue = new AccountDto();
+        AccountEntity foundAccount = accountRepository.findAccountByIban(balanceDetails.getIban());
+        BigDecimal newBalance = foundAccount.getBalance().add(balanceDetails.getBalance());
+        foundAccount.setBalance(newBalance);
+        AccountEntity updatedIban = accountRepository.save(foundAccount);
+        BeanUtils.copyProperties(updatedIban, returnValue);
+        return returnValue;
+    }
+
+    public AccountDto getAccountsBalance(String iban) {
+        AccountDto returnValue = new AccountDto();
+
+        AccountEntity returnedAccount = accountRepository.findAccountByIban(iban);
+        BeanUtils.copyProperties(returnedAccount, returnValue);
+        return returnValue;
+    }
+
+    public String accountTransfer(AccountDto transferDetails) {
+        AccountDto returnValue = new AccountDto();
+        AccountEntity transferFromAccount = accountRepository.findAccountByIban(transferDetails.getTransferFromIban());
+        AccountEntity transferToAccount = accountRepository.findAccountByIban(transferDetails.getTransferToIban());
+        BigDecimal currentBalanceFromAccount = transferFromAccount.getBalance();
+        BigDecimal currentBalanceToAccount = transferToAccount.getBalance();
+        BigDecimal newBalanceFromAccount = currentBalanceFromAccount.subtract(transferDetails.getTransferAmount());
+        BigDecimal newBalanceToAccount = currentBalanceToAccount.add(transferDetails.getTransferAmount());
+        transferFromAccount.setBalance(newBalanceFromAccount);
+        transferToAccount.setBalance(newBalanceToAccount);
+        AccountEntity updatedFromAccount = accountRepository.save(transferFromAccount);
+        AccountEntity updatedToAccount = accountRepository.save(transferToAccount);
+        if (!isNull(updatedFromAccount) && !isNull(updatedToAccount)) {
+
+        }
+        return "Transfer was successful!";
     }
 }

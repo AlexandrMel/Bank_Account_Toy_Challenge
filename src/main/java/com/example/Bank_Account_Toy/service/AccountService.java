@@ -11,4 +11,12 @@ public interface AccountService {
     AccountDto createAccount(AccountDto account);
 
     AccountDto setAccountSetting(String iban, AccountDto setting);
+
+    AccountDto getAccountsBalance(String iban);
+
+    AccountDto accountDeposit(AccountDto balanceDetails);
+
+    String accountTransfer(AccountDto transferDetails);
+
+
 }
