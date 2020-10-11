@@ -1,7 +1,9 @@
 package com.example.Bank_Account_Toy.service.impl;
 
 import com.example.Bank_Account_Toy.io.entity.AccountEntity;
+import com.example.Bank_Account_Toy.io.entity.TransactionHistoryEntity;
 import com.example.Bank_Account_Toy.repository.AccountRepository;
+import com.example.Bank_Account_Toy.repository.TransactionHistoryRepository;
 import com.example.Bank_Account_Toy.service.AccountService;
 import com.example.Bank_Account_Toy.shared.Utils;
 import com.example.Bank_Account_Toy.shared.dto.AccountDto;
@@ -11,8 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -22,6 +27,8 @@ import static java.util.Objects.isNull;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    TransactionHistoryRepository transactionHistoryRepository;
     @Autowired
     Utils utils;
 
@@ -72,9 +79,20 @@ public class AccountServiceImpl implements AccountService {
 
         AccountDto returnValue = new AccountDto();
         AccountEntity foundAccount = accountRepository.findAccountByIban(balanceDetails.getIban());
-        BigDecimal newBalance = foundAccount.getBalance().add(balanceDetails.getBalance());
+        BigDecimal newBalance = foundAccount.getBalance().add(balanceDetails.getTransactionAmount());
         foundAccount.setBalance(newBalance);
         AccountEntity updatedIban = accountRepository.save(foundAccount);
+        if (!isNull(updatedIban)) {
+            TransactionHistoryEntity newTransaction = new TransactionHistoryEntity();
+            BeanUtils.copyProperties(balanceDetails, newTransaction);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            newTransaction.setCreatedAt(timestamp);
+            newTransaction.setTransactionId(utils.generateIBAN(15, "userId"));
+            newTransaction.setIbanPrefix_Sender_Receiver(updatedIban.getIbanPrefix());
+            newTransaction.setIbanSender_Receiver(updatedIban.getIban());
+            newTransaction.setBalanceAfterTransaction(updatedIban.getBalance());
+            TransactionHistoryEntity savedTransaction = transactionHistoryRepository.save(newTransaction);
+        }
         BeanUtils.copyProperties(updatedIban, returnValue);
         return returnValue;
     }
@@ -93,8 +111,8 @@ public class AccountServiceImpl implements AccountService {
         AccountEntity transferToAccount = accountRepository.findAccountByIban(transferDetails.getTransferToIban());
         BigDecimal currentBalanceFromAccount = transferFromAccount.getBalance();
         BigDecimal currentBalanceToAccount = transferToAccount.getBalance();
-        BigDecimal newBalanceFromAccount = currentBalanceFromAccount.subtract(transferDetails.getTransferAmount());
-        BigDecimal newBalanceToAccount = currentBalanceToAccount.add(transferDetails.getTransferAmount());
+        BigDecimal newBalanceFromAccount = currentBalanceFromAccount.subtract(transferDetails.getTransactionAmount());
+        BigDecimal newBalanceToAccount = currentBalanceToAccount.add(transferDetails.getTransactionAmount());
         transferFromAccount.setBalance(newBalanceFromAccount);
         transferToAccount.setBalance(newBalanceToAccount);
         AccountEntity updatedFromAccount = accountRepository.save(transferFromAccount);

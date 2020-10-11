@@ -19,8 +19,33 @@ public class AccountDto implements Serializable {
     private Boolean settingValue;
     private String transferFromIban;
     private String transferToIban;
-    private BigDecimal transferAmount;
-    private String transferPurpose;
+    private String transactionPurpose;
+    private BigDecimal transactionAmount;
+    private String transactionType;
+
+    public String getTransactionPurpose() {
+        return transactionPurpose;
+    }
+
+    public void setTransactionPurpose(String transactionPurpose) {
+        this.transactionPurpose = transactionPurpose;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public BigDecimal getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
 
     public String getTransferFromIban() {
         return transferFromIban;
@@ -36,22 +61,6 @@ public class AccountDto implements Serializable {
 
     public void setTransferToIban(String transferToIban) {
         this.transferToIban = transferToIban;
-    }
-
-    public BigDecimal getTransferAmount() {
-        return transferAmount;
-    }
-
-    public void setTransferAmount(BigDecimal transferAmount) {
-        this.transferAmount = transferAmount;
-    }
-
-    public String getTransferPurpose() {
-        return transferPurpose;
-    }
-
-    public void setTransferPurpose(String transferPurpose) {
-        this.transferPurpose = transferPurpose;
     }
 
     public String getSettingId() {

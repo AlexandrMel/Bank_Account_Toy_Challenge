@@ -6,8 +6,16 @@ public class AccountTransferRequestModel {
     private String userId;
     private String transferFromIban;
     private String transferToIban;
-    private BigDecimal transferAmount;
+    private BigDecimal transactionAmount;
     private String transferPurpose;
+
+    public BigDecimal getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
 
     public String getUserId() {
         return userId;
@@ -31,14 +39,6 @@ public class AccountTransferRequestModel {
 
     public void setTransferToIban(String transferToIban) {
         this.transferToIban = transferToIban;
-    }
-
-    public BigDecimal getTransferAmount() {
-        return transferAmount;
-    }
-
-    public void setTransferAmount(BigDecimal transferAmount) {
-        this.transferAmount = transferAmount;
     }
 
     public String getTransferPurpose() {
