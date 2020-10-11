@@ -4,10 +4,36 @@ import java.math.BigDecimal;
 
 public class AccountTransferRequestModel {
     private String userId;
-    private String transferFromIban;
+    private String ibanPrefix;
+    private String iban;
+    private String transferToIbanPrefix;
     private String transferToIban;
     private BigDecimal transactionAmount;
-    private String transferPurpose;
+    private String transactionPurpose;
+
+    public String getTransactionPurpose() {
+        return transactionPurpose;
+    }
+
+    public void setTransactionPurpose(String transactionPurpose) {
+        this.transactionPurpose = transactionPurpose;
+    }
+
+    public String getIbanPrefix() {
+        return ibanPrefix;
+    }
+
+    public void setIbanPrefix(String ibanPrefix) {
+        this.ibanPrefix = ibanPrefix;
+    }
+
+    public String getTransferToIbanPrefix() {
+        return transferToIbanPrefix;
+    }
+
+    public void setTransferToIbanPrefix(String transferToIbanPrefix) {
+        this.transferToIbanPrefix = transferToIbanPrefix;
+    }
 
     public BigDecimal getTransactionAmount() {
         return transactionAmount;
@@ -25,12 +51,12 @@ public class AccountTransferRequestModel {
         this.userId = userId;
     }
 
-    public String getTransferFromIban() {
-        return transferFromIban;
+    public String getIban() {
+        return iban;
     }
 
-    public void setTransferFromIban(String transferFromIban) {
-        this.transferFromIban = transferFromIban;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public String getTransferToIban() {
@@ -41,11 +67,4 @@ public class AccountTransferRequestModel {
         this.transferToIban = transferToIban;
     }
 
-    public String getTransferPurpose() {
-        return transferPurpose;
-    }
-
-    public void setTransferPurpose(String transferPurpose) {
-        this.transferPurpose = transferPurpose;
-    }
 }

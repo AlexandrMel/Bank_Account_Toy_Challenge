@@ -2,6 +2,7 @@ package com.example.Bank_Account_Toy.shared.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class AccountDto implements Serializable {
     private static final long serialVersionUID = -820594852955351035L;
@@ -17,11 +18,64 @@ public class AccountDto implements Serializable {
     private String sendMoneyTo;
     private String settingId;
     private Boolean settingValue;
-    private String transferFromIban;
+    private String transferToIbanPrefix;
     private String transferToIban;
     private String transactionPurpose;
     private BigDecimal transactionAmount;
     private String transactionType;
+    private String transactionId;
+    private Date createdAt;
+    private String ibanSender_Receiver;
+    private String ibanPrefix_Sender_Receiver;
+    private BigDecimal balanceAfterTransaction;
+
+    public BigDecimal getBalanceAfterTransaction() {
+        return balanceAfterTransaction;
+    }
+
+    public void setBalanceAfterTransaction(BigDecimal balanceAfterTransaction) {
+        this.balanceAfterTransaction = balanceAfterTransaction;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getIbanSender_Receiver() {
+        return ibanSender_Receiver;
+    }
+
+    public void setIbanSender_Receiver(String ibanSender_Receiver) {
+        this.ibanSender_Receiver = ibanSender_Receiver;
+    }
+
+    public String getIbanPrefix_Sender_Receiver() {
+        return ibanPrefix_Sender_Receiver;
+    }
+
+    public void setIbanPrefix_Sender_Receiver(String ibanPrefix_Sender_Receiver) {
+        this.ibanPrefix_Sender_Receiver = ibanPrefix_Sender_Receiver;
+    }
+
+    public String getTransferToIbanPrefix() {
+        return transferToIbanPrefix;
+    }
+
+    public void setTransferToIbanPrefix(String transferToIbanPrefix) {
+        this.transferToIbanPrefix = transferToIbanPrefix;
+    }
 
     public String getTransactionPurpose() {
         return transactionPurpose;
@@ -45,14 +99,6 @@ public class AccountDto implements Serializable {
 
     public void setTransactionAmount(BigDecimal transactionAmount) {
         this.transactionAmount = transactionAmount;
-    }
-
-    public String getTransferFromIban() {
-        return transferFromIban;
-    }
-
-    public void setTransferFromIban(String transferFromIban) {
-        this.transferFromIban = transferFromIban;
     }
 
     public String getTransferToIban() {

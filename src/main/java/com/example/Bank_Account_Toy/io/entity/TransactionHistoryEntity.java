@@ -22,8 +22,6 @@ public class TransactionHistoryEntity implements Serializable {
     private String transactionId;
     @Column(nullable = false)
     private Date createdAt;
-    @Column(nullable = false, length = 50)
-    private String userId;
     @Column(nullable = false, length = 35)
     private String iban;
     @Column(nullable = false, length = 2)
@@ -78,15 +76,7 @@ public class TransactionHistoryEntity implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
+    
     public String getIban() {
         return iban;
     }

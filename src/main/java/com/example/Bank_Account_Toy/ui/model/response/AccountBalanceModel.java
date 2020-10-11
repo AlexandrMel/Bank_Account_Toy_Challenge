@@ -2,7 +2,7 @@ package com.example.Bank_Account_Toy.ui.model.response;
 
 import java.math.BigDecimal;
 
-public class AccountRestBalance {
+public class AccountBalanceModel {
     private String ibanPrefix;
     private String iban;
     private String accountType;
