@@ -7,9 +7,10 @@ import com.example.Bank_Account_Toy.repository.TransactionHistoryRepository;
 import com.example.Bank_Account_Toy.service.AccountService;
 import com.example.Bank_Account_Toy.shared.Utils;
 import com.example.Bank_Account_Toy.shared.dto.AccountDto;
-import javassist.NotFoundException;
+import com.example.Bank_Account_Toy.ui.model.response.ErrorMessages;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -36,13 +37,13 @@ public class AccountServiceImpl implements AccountService {
 
     //Method to make a deposit to a specific Account
     @Override
-    public AccountDto accountDeposit(AccountDto balanceDetails) throws NotFoundException {
+    public AccountDto accountDeposit(AccountDto balanceDetails) throws Exception {
 //Instantiate an Account Dto for return value
         AccountDto returnValue = new AccountDto();
         //Search for the account by iban in the database using AccountRepository class
         AccountEntity foundAccount = accountRepository.findAccountByIban(balanceDetails.getIban());
         if (isNull(foundAccount)) {
-            throw new NotFoundException("No Account found with this IBAN!, please provide a valid IBAN");
+            throw new Exception(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()); // NotFoundException("No Account found with this IBAN!, please provide a valid IBAN");
         }
         BigDecimal newBalance = foundAccount.getBalance().add(balanceDetails.getTransactionAmount());
         foundAccount.setBalance(newBalance);

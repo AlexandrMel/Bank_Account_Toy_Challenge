@@ -15,7 +15,7 @@ public interface AccountService {
 
     AccountDto getAccountsBalance(String iban);
 
-    AccountDto accountDeposit(AccountDto balanceDetails) throws NotFoundException;
+    AccountDto accountDeposit(AccountDto balanceDetails) throws NotFoundException, Exception;
 
     String accountTransfer(AccountDto transferDetails);
 

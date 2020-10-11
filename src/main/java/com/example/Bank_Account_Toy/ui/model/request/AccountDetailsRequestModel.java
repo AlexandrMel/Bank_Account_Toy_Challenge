@@ -1,10 +1,23 @@
 package com.example.Bank_Account_Toy.ui.model.request;
 
+import static java.util.Objects.isNull;
+
 public class AccountDetailsRequestModel {
-    private String firstName;
-    private String lastName;
-    private String accountType;
-    private String userId;
+    private String firstName = "";
+    private String lastName = "";
+    private String accountType = "";
+    private String userId = "";
+
+    public Boolean validator() {
+        return nullOrEmpty(firstName) ||
+                nullOrEmpty(lastName) ||
+                nullOrEmpty(accountType) ||
+                nullOrEmpty(userId);
+    }
+
+    public Boolean nullOrEmpty(String prop) {
+        return prop.isEmpty() || isNull(prop);
+    }
 
     public String getUserId() {
         return userId;

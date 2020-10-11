@@ -1,14 +1,31 @@
 package com.example.Bank_Account_Toy.ui.model.request;
 
+import static java.util.Objects.isNull;
+
 import java.math.BigDecimal;
 
 public class AccountDepositRequestModel {
-    private String transactionType;
-    private String userId;
-    private String ibanPrefix;
-    private String iban;
+
+    private String transactionType = "";
+    private String userId = "";
+    private String ibanPrefix = "";
+    private String iban = "";
     private BigDecimal transactionAmount;
-    private String transactionPurpose;
+    private String transactionPurpose = "";
+
+    public Boolean validator() {
+        return nullOrEmpty(iban) ||
+                nullOrEmpty(ibanPrefix) ||
+                nullOrEmpty(userId) ||
+                nullOrEmpty(transactionType) ||
+                nullOrEmpty(transactionPurpose) ||
+                isNull(transactionAmount);
+
+    }
+
+    public Boolean nullOrEmpty(String prop) {
+        return prop.isEmpty() || isNull(prop);
+    }
 
     public String getTransactionPurpose() {
         return transactionPurpose;

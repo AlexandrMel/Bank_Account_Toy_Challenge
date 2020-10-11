@@ -1,6 +1,7 @@
 package com.example.Bank_Account_Toy.ui.controller;
 
 
+import com.example.Bank_Account_Toy.exceptions.AccountServiceException;
 import com.example.Bank_Account_Toy.service.AccountService;
 import com.example.Bank_Account_Toy.shared.dto.AccountDto;
 import com.example.Bank_Account_Toy.ui.model.request.AccountDepositRequestModel;
@@ -8,13 +9,17 @@ import com.example.Bank_Account_Toy.ui.model.request.AccountDetailsRequestModel;
 import com.example.Bank_Account_Toy.ui.model.request.AccountTransferRequestModel;
 import com.example.Bank_Account_Toy.ui.model.request.SetAccountSettingsRequestModel;
 import com.example.Bank_Account_Toy.ui.model.response.*;
-import javassist.NotFoundException;
+import jdk.jshell.ErroneousSnippet;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/accounts") //http://localhost:8080/accounts
@@ -26,7 +31,10 @@ public class AccountController {
 
     //Route to make a deposit into a specific Account
     @PutMapping(path = "/balance") // http://localhost:8080/accounts/balance
-    public AccountBalanceModel accountDeposit(@RequestBody AccountDepositRequestModel balanceDetails) throws NotFoundException {
+    public AccountBalanceModel accountDeposit(@Valid @RequestBody AccountDepositRequestModel balanceDetails) throws Exception {
+        if (balanceDetails.validator()) {
+            throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
         //Create an instance of Data Transfer Object
         AccountDto accountDto = new AccountDto();
         //Copy the data from the request Body to the Data Transfer Object
@@ -37,12 +45,15 @@ public class AccountController {
         AccountBalanceModel returnValue = new AccountBalanceModel();
         //Copy the the data received from the Service Layer method into response Model and return to User
         BeanUtils.copyProperties(returnedUpdatedIban, returnValue);
+
         return returnValue;
     }
 
     @PostMapping
     public AccountRest createAccount(@RequestBody AccountDetailsRequestModel accountDetails) {
-
+        if (accountDetails.validator()) {
+            throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
         AccountRest returnValue = new AccountRest();
         AccountDto accountDto = new AccountDto();
         BeanUtils.copyProperties(accountDetails, accountDto);
@@ -79,6 +90,10 @@ public class AccountController {
 
     @PutMapping(path = "/settings/{iban}")
     public AccountRespSettingUpdate setAccountSettings(@PathVariable String iban, @RequestBody SetAccountSettingsRequestModel settingDetails) {
+        if (settingDetails.validator()) {
+            throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
         AccountDto accountDto = new AccountDto();
         BeanUtils.copyProperties(settingDetails, accountDto);
 
@@ -90,7 +105,9 @@ public class AccountController {
 
     @PostMapping(path = "/transaction")
     public String accountTransfer(@RequestBody AccountTransferRequestModel transferDetails) {
-
+        if (transferDetails.validator()) {
+            throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
         //AccountTransferRequestModel returnValue = new AccountTransferRequestModel();
         AccountDto accountDto = new AccountDto();
         BeanUtils.copyProperties(transferDetails, accountDto);
