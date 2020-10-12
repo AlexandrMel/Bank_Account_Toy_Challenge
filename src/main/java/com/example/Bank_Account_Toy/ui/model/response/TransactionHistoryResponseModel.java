@@ -3,7 +3,7 @@ package com.example.Bank_Account_Toy.ui.model.response;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class AccountTransactionHistoryResp {
+public class TransactionHistoryResponseModel {
     private String transactionPurpose;
     private BigDecimal transactionAmount;
     private String transactionType;

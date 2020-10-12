@@ -2,7 +2,7 @@ package com.example.Bank_Account_Toy.ui.model.request;
 
 import static java.util.Objects.isNull;
 
-public class AccountDetailsRequestModel {
+public class CreateAccountRequestModel {
     private String firstName = "";
     private String lastName = "";
     private String accountType = "";

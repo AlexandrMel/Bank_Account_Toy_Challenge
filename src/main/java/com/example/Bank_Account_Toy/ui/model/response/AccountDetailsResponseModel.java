@@ -1,12 +1,12 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
-public class AccountRest {
-    private String ibanPrefix;
-    private String iban;
+public class AccountDetailsResponseModel {
+    private String userId;
     private String accountType;
     private String firstName;
     private String lastName;
-    private String userId;
+    private String ibanPrefix;
+    private String iban;
 
     public String getUserId() {
         return userId;

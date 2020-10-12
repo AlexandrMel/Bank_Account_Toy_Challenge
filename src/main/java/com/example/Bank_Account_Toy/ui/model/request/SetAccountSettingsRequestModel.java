@@ -4,13 +4,23 @@ import static java.util.Objects.isNull;
 
 public class SetAccountSettingsRequestModel {
     private String userId = "";
+    private String iban = "";
     private String settingId = "";
     private Boolean settingValue;
 
     public Boolean validator() {
         return nullOrEmpty(settingId) ||
+                nullOrEmpty(iban) ||
                 isNull(settingValue) ||
                 nullOrEmpty(userId);
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public Boolean nullOrEmpty(String prop) {

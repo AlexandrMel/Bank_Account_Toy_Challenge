@@ -1,13 +1,23 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
 import javax.swing.text.StyledEditorKit;
+import java.util.Date;
 
-public class AccountRespByType {
+public class AccountsByTypeResponseModel {
+    private String userId;
+    private String accountType;
     private String ibanPrefix;
     private String iban;
-    private String accountType;
-    private String userId;
+    private Date createdAt;
     private Boolean locked;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public Boolean getLocked() {
         return locked;

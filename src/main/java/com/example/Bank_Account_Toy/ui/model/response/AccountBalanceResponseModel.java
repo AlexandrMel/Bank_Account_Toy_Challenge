@@ -2,11 +2,11 @@ package com.example.Bank_Account_Toy.ui.model.response;
 
 import java.math.BigDecimal;
 
-public class AccountBalanceModel {
+public class AccountBalanceResponseModel {
+    private String userId;
+    private String accountType;
     private String ibanPrefix;
     private String iban;
-    private String accountType;
-    private String userId;
     private BigDecimal balance;
 
     public BigDecimal getBalance() {

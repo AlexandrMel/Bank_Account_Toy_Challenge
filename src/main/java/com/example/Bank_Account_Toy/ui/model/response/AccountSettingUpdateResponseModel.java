@@ -1,6 +1,6 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
-public class AccountRespSettingUpdate {
+public class AccountSettingUpdateResponseModel {
     private String ibanPrefix;
     private String iban;
     private String accountType;

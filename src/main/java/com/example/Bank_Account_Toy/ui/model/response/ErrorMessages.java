@@ -4,13 +4,15 @@ package com.example.Bank_Account_Toy.ui.model.response;
 public enum ErrorMessages {
 
     MISSING_REQUIRED_FIELD("Missing required field. Please check documentation for required fields"),
-    RECORD_ALREADY_EXISTS("Record already exists"),
+    ACCOUNT_LOCKED("Unfortunately you cannot perform this transaction because your account is locked! "),
     INTERNAL_SERVER_ERROR("Internal server error"),
-    NO_RECORD_FOUND("Record with provided id is not found"),
-    AUTHENTICATION_FAILED("Authentication failed"),
-    COULD_NOT_UPDATE_RECORD("Could not update record"),
-    COULD_NOT_DELETE_RECORD("Could not delete record"),
-    EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified");
+    NO_ACCOUNT_FOUND("Account with the provided IBAN is not found"),
+    INSUFFICIENT_FUNDS("Your account has insufficient funds for the transfer"),
+    COULD_NOT_UPDATE_BALANCE("Could not update your balance, please try again!"),
+    COULD_NOT_UPDATE_TRANSACTION_HISTORY("An error occurred while updating your transaction history"),
+    COULD_NOT_CREATE_NEW_ACCOUNT("An error occurred while trying to create your account, please try again"),
+    UNABLE_TO_TRANSFER_TO_ACCOUNT("Your Account Type does not support transfer operation to this specific Account, please check your account settings"),
+    INVALID_ACCOUNT_TYPE("Please provide a valid account type (checking, savings or privateLoan)");
 
 
     private String errorMessage;

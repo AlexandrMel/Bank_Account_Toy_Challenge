@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity(name = "accounts")
 public class AccountEntity implements Serializable {
@@ -30,17 +31,16 @@ public class AccountEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String userId;
     @Column(nullable = false)
-    private String ReceiveMoneyFrom;
-    @Column(nullable = false)
     private String SendMoneyTo;
+    @Column(nullable = false)
+    private Date createdAt;
 
-
-    public String getReceiveMoneyFrom() {
-        return ReceiveMoneyFrom;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setReceiveMoneyFrom(String receiveMoneyFrom) {
-        ReceiveMoneyFrom = receiveMoneyFrom;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getSendMoneyTo() {

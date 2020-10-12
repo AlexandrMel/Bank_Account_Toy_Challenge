@@ -5,21 +5,17 @@ import com.example.Bank_Account_Toy.exceptions.AccountServiceException;
 import com.example.Bank_Account_Toy.service.AccountService;
 import com.example.Bank_Account_Toy.shared.dto.AccountDto;
 import com.example.Bank_Account_Toy.ui.model.request.AccountDepositRequestModel;
-import com.example.Bank_Account_Toy.ui.model.request.AccountDetailsRequestModel;
+import com.example.Bank_Account_Toy.ui.model.request.CreateAccountRequestModel;
 import com.example.Bank_Account_Toy.ui.model.request.AccountTransferRequestModel;
 import com.example.Bank_Account_Toy.ui.model.request.SetAccountSettingsRequestModel;
 import com.example.Bank_Account_Toy.ui.model.response.*;
-import jdk.jshell.ErroneousSnippet;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/accounts") //http://localhost:8080/accounts
@@ -31,7 +27,7 @@ public class AccountController {
 
     //Route to make a deposit into a specific Account
     @PutMapping(path = "/balance") // http://localhost:8080/accounts/balance
-    public AccountBalanceModel accountDeposit(@Valid @RequestBody AccountDepositRequestModel balanceDetails) throws Exception {
+    public AccountBalanceResponseModel accountDeposit(@Valid @RequestBody AccountDepositRequestModel balanceDetails) throws Exception {
         if (balanceDetails.validator()) {
             throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -42,7 +38,7 @@ public class AccountController {
         //Pass the data to Service layer and call the necessary method to be executed and receive back the response from the database;
         AccountDto returnedUpdatedIban = accountService.accountDeposit(accountDto);
         //Create a response Object to be passed to User based on a specific Model(AccountBalanceModel)
-        AccountBalanceModel returnValue = new AccountBalanceModel();
+        AccountBalanceResponseModel returnValue = new AccountBalanceResponseModel();
         //Copy the the data received from the Service Layer method into response Model and return to User
         BeanUtils.copyProperties(returnedUpdatedIban, returnValue);
 
@@ -50,26 +46,35 @@ public class AccountController {
     }
 
     @PostMapping
-    public AccountRest createAccount(@RequestBody AccountDetailsRequestModel accountDetails) {
+    public AccountDetailsResponseModel createAccount(@RequestBody CreateAccountRequestModel accountDetails) throws Exception {
+        //Simple validation
         if (accountDetails.validator()) {
             throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-        AccountRest returnValue = new AccountRest();
-        AccountDto accountDto = new AccountDto();
-        BeanUtils.copyProperties(accountDetails, accountDto);
-        AccountDto createdAccount = accountService.createAccount(accountDto);
-        BeanUtils.copyProperties(createdAccount, returnValue);
+        if (accountDetails.getAccountType().equals("savings") || accountDetails.getAccountType().equals("checking") || accountDetails.getAccountType().equals("privateLoan")) {
+            //Instantiate Model for return value
+            AccountDetailsResponseModel returnValue = new AccountDetailsResponseModel();
+            //Instantiate Data Transfer Object
+            AccountDto accountDto = new AccountDto();
+            BeanUtils.copyProperties(accountDetails, accountDto);
+            //Call Create Account Service Layer Method
+            AccountDto createdAccount = accountService.createAccount(accountDto);
+            BeanUtils.copyProperties(createdAccount, returnValue);
 
-        return returnValue;
+            return returnValue;
+        } else {
+            throw new AccountServiceException(ErrorMessages.INVALID_ACCOUNT_TYPE.getErrorMessage());
+
+        }
     }
 
     //Get All Accounts that match a specific type
     @GetMapping(path = "/type/{type}")
-    public List<AccountRespByType> getAccountsByType(@PathVariable String type) {
-        List<AccountRespByType> returnValue = new ArrayList<AccountRespByType>();
+    public List<AccountsByTypeResponseModel> getAccountsByType(@PathVariable String type) {
+        List<AccountsByTypeResponseModel> returnValue = new ArrayList<AccountsByTypeResponseModel>();
         List<AccountDto> accountDtoList = accountService.getAccountsByType(type);
         for (AccountDto accountDto : accountDtoList) {
-            AccountRespByType accountRest = new AccountRespByType();
+            AccountsByTypeResponseModel accountRest = new AccountsByTypeResponseModel();
             BeanUtils.copyProperties(accountDto, accountRest);
             returnValue.add(accountRest);
         }
@@ -78,8 +83,8 @@ public class AccountController {
 
 
     @GetMapping(path = "/balance/{iban}")
-    public AccountBalanceModel getAccountsBalance(@PathVariable String iban) {
-        AccountBalanceModel returnValue = new AccountBalanceModel();
+    public AccountBalanceResponseModel getAccountsBalance(@PathVariable String iban) {
+        AccountBalanceResponseModel returnValue = new AccountBalanceResponseModel();
 
         AccountDto accountDto = accountService.getAccountsBalance(iban);
         BeanUtils.copyProperties(accountDto, returnValue);
@@ -88,8 +93,8 @@ public class AccountController {
     }
 
 
-    @PutMapping(path = "/settings/{iban}")
-    public AccountRespSettingUpdate setAccountSettings(@PathVariable String iban, @RequestBody SetAccountSettingsRequestModel settingDetails) {
+    @PutMapping(path = "/settings")
+    public AccountSettingUpdateResponseModel setAccountSettings(@RequestBody SetAccountSettingsRequestModel settingDetails) {
         if (settingDetails.validator()) {
             throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -97,14 +102,14 @@ public class AccountController {
         AccountDto accountDto = new AccountDto();
         BeanUtils.copyProperties(settingDetails, accountDto);
 
-        AccountDto returnedUpdatedIban = accountService.setAccountSetting(iban, accountDto);
-        AccountRespSettingUpdate returnValue = new AccountRespSettingUpdate();
+        AccountDto returnedUpdatedIban = accountService.setAccountSetting(accountDto);
+        AccountSettingUpdateResponseModel returnValue = new AccountSettingUpdateResponseModel();
         BeanUtils.copyProperties(returnedUpdatedIban, returnValue);
         return returnValue;
     }
 
     @PostMapping(path = "/transaction")
-    public String accountTransfer(@RequestBody AccountTransferRequestModel transferDetails) {
+    public String accountTransfer(@RequestBody AccountTransferRequestModel transferDetails) throws Exception {
         if (transferDetails.validator()) {
             throw new AccountServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -119,11 +124,11 @@ public class AccountController {
 
     //Get All Account transactions that match a specific iban
     @GetMapping(path = "/transaction/{iban}")
-    public List<AccountTransactionHistoryResp> getAccountTransactionHistoryByIban(@PathVariable String iban) {
-        List<AccountTransactionHistoryResp> returnValue = new ArrayList<AccountTransactionHistoryResp>();
+    public List<TransactionHistoryResponseModel> getAccountTransactionHistoryByIban(@PathVariable String iban) {
+        List<TransactionHistoryResponseModel> returnValue = new ArrayList<TransactionHistoryResponseModel>();
         List<AccountDto> accountDtoList = accountService.getTransactionHistoryByIban(iban);
         for (AccountDto accountDto : accountDtoList) {
-            AccountTransactionHistoryResp accountRest = new AccountTransactionHistoryResp();
+            TransactionHistoryResponseModel accountRest = new TransactionHistoryResponseModel();
             BeanUtils.copyProperties(accountDto, accountRest);
             returnValue.add(accountRest);
         }

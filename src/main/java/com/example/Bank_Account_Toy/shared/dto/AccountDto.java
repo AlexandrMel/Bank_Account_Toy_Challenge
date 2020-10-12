@@ -14,7 +14,6 @@ public class AccountDto implements Serializable {
     private BigDecimal balance = BigDecimal.ZERO;
     private Boolean locked = false;
     private String userId;
-    private String receiveMoneyFrom;
     private String sendMoneyTo;
     private String settingId;
     private Boolean settingValue;
@@ -139,14 +138,6 @@ public class AccountDto implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getReceiveMoneyFrom() {
-        return receiveMoneyFrom;
-    }
-
-    public void setReceiveMoneyFrom(String receiveMoneyFrom) {
-        this.receiveMoneyFrom = receiveMoneyFrom;
     }
 
     public String getSendMoneyTo() {

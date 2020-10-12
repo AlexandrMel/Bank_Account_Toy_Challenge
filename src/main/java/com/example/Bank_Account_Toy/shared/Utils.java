@@ -20,30 +20,30 @@ public class Utils {
 
     private String generateRandomNumberString(int length, String type) {
         StringBuilder returnValue = new StringBuilder(length);
-        String BASE = type == "userId" ? ALPHABET : NUMBERS;
+        String BASE = type == "mix" ? ALPHABET : NUMBERS;
         for (int i = 0; i < length; i++) {
             returnValue.append(BASE.charAt(RANDOM.nextInt(BASE.length())));
         }
         return new String(returnValue);
     }
 
-    public String[][] setAccountTransactionRules(String accountType) {
+    public String setAccountTransactionRules(String accountType) {
         return generateAccountTransactionRules(accountType);
     }
 
-    private String[][] generateAccountTransactionRules(String accountTape) {
+    private String generateAccountTransactionRules(String accountTape) {
 
         switch (accountTape) {
             case "checking":
-                String[][] returnChecking = {{"checking", "savings", "privateLoan"}, {"checking", "savings", "privateLoan"}};
+                String returnChecking = "checking, savings, privateLoan";
                 return returnChecking;
             case "savings":
-                String[][] returnSavings = {{"checking", "savings", "privateLoan"}, {"checking"}};
+                String returnSavings = "checking";
                 return returnSavings;
             case "privateLoan":
-                String[][] returnPrivateLoan = {{"checking", "savings", "privateLoan"}, {}};
+                String returnPrivateLoan = "";
                 return returnPrivateLoan;
         }
-        return new String[0][];
+        return null;
     }
 }
