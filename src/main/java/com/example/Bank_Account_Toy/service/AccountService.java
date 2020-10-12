@@ -10,7 +10,7 @@ public interface AccountService {
 
     AccountDto createAccount(AccountDto account) throws Exception;
 
-    AccountDto setAccountSetting(AccountDto setting);
+    AccountDto setAccountSetting(AccountDto setting) throws Exception;
 
     AccountDto getAccountsBalance(String iban);
 

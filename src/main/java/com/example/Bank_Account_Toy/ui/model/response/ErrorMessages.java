@@ -5,7 +5,7 @@ public enum ErrorMessages {
 
     MISSING_REQUIRED_FIELD("Missing required field. Please check documentation for required fields"),
     ACCOUNT_LOCKED("Unfortunately you cannot perform this transaction because your account is locked! "),
-    INTERNAL_SERVER_ERROR("Internal server error"),
+    COULD_NOT_CHANGE_SETTING("Unfortunately we could not update your setting, please try again"),
     NO_ACCOUNT_FOUND("Account with the provided IBAN is not found"),
     INSUFFICIENT_FUNDS("Your account has insufficient funds for the transfer"),
     COULD_NOT_UPDATE_BALANCE("Could not update your balance, please try again!"),
