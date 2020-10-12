@@ -4,6 +4,7 @@ import static java.util.Objects.isNull;
 
 import java.math.BigDecimal;
 
+//Model to convert incoming Json data into Java Object for Account Deposit Route
 public class AccountDepositRequestModel {
 
     private String transactionType = "";
@@ -13,6 +14,7 @@ public class AccountDepositRequestModel {
     private BigDecimal transactionAmount;
     private String transactionPurpose = "";
 
+    //Simple validator
     public Boolean validator() {
         return nullOrEmpty(iban) ||
                 nullOrEmpty(ibanPrefix) ||

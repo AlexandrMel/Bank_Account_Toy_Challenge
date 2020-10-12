@@ -1,11 +1,10 @@
 package com.example.Bank_Account_Toy.service;
 
 import com.example.Bank_Account_Toy.shared.dto.AccountDto;
-import javassist.NotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Interface for the Service Layer
 public interface AccountService {
     List<AccountDto> getAccountsByType(String accountType);
 

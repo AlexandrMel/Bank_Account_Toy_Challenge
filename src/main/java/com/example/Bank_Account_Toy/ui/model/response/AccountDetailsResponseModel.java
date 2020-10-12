@@ -1,5 +1,6 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
+//Model to convert Java return Object to JSON  for create account route
 public class AccountDetailsResponseModel {
     private String userId;
     private String accountType;

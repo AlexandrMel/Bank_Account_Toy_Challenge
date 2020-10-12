@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+//Transaction History Entity for creating the specific DB schema
 @Entity(name = "transaction_history")
 public class TransactionHistoryEntity implements Serializable {
     private static final long serialVersionUID = -5978700523497134114L;
@@ -76,7 +77,7 @@ public class TransactionHistoryEntity implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    
+
     public String getIban() {
         return iban;
     }

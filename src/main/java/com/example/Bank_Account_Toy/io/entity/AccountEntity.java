@@ -1,7 +1,5 @@
 package com.example.Bank_Account_Toy.io.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +8,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+//Account Entity for creating the specific DB schema
 @Entity(name = "accounts")
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 260415159772477368L;
-
-
+    
     @Id
     @GeneratedValue
     private long id;

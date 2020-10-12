@@ -1,5 +1,6 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
+//Model to convert Java return Object to JSON  for change account settings route
 public class AccountSettingUpdateResponseModel {
     private String ibanPrefix;
     private String iban;

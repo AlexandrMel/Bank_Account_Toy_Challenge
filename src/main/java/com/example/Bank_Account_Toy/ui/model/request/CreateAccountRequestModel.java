@@ -2,12 +2,14 @@ package com.example.Bank_Account_Toy.ui.model.request;
 
 import static java.util.Objects.isNull;
 
+//Model to convert incoming Json data into Java Object for Create Account Route
 public class CreateAccountRequestModel {
     private String firstName = "";
     private String lastName = "";
     private String accountType = "";
     private String userId = "";
 
+    //Simple validator
     public Boolean validator() {
         return nullOrEmpty(firstName) ||
                 nullOrEmpty(lastName) ||

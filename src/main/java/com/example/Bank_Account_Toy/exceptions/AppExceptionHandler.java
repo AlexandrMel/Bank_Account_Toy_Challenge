@@ -11,13 +11,12 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.example.Bank_Account_Toy.ui.model.response.ErrorMessage;
 
-import java.util.Date;
 
 // Exception wrappers with Spring
 @ControllerAdvice
 public class AppExceptionHandler {
 
-    //Create Exception Wrapper that makes it more specific - handleUserServiceException - with only 2 fields Time stamp and Message
+    //Create Exception Wrapper that makes it more specific - handleAccountServiceException - with only 2 fields Time stamp and Message
     @ExceptionHandler(value = {AccountServiceException.class})
     public ResponseEntity<Object> handleAccountServiceException(AccountServiceException ex, WebRequest request) {
 

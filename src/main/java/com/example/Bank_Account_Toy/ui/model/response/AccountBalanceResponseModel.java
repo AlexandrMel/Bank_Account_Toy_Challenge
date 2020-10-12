@@ -2,6 +2,7 @@ package com.example.Bank_Account_Toy.ui.model.response;
 
 import java.math.BigDecimal;
 
+//Model to convert Java return Object to JSON  for get account balance route
 public class AccountBalanceResponseModel {
     private String userId;
     private String accountType;

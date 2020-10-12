@@ -2,12 +2,14 @@ package com.example.Bank_Account_Toy.ui.model.request;
 
 import static java.util.Objects.isNull;
 
+//Model to convert incoming Json data into Java Object for Change Account Settings Route
 public class SetAccountSettingsRequestModel {
     private String userId = "";
     private String iban = "";
     private String settingId = "";
     private Boolean settingValue;
 
+    //Simple validator
     public Boolean validator() {
         return nullOrEmpty(settingId) ||
                 nullOrEmpty(iban) ||

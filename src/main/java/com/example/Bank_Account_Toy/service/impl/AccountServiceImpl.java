@@ -10,15 +10,11 @@ import com.example.Bank_Account_Toy.shared.dto.AccountDto;
 import com.example.Bank_Account_Toy.ui.model.response.ErrorMessages;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
 

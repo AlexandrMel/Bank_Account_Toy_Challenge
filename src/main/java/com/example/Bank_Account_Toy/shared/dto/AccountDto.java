@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+//Main Data Transfer Object, it is huge, but does the job
 public class AccountDto implements Serializable {
     private static final long serialVersionUID = -820594852955351035L;
     private String firstName;

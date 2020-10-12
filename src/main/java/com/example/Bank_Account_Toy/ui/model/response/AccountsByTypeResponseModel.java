@@ -1,8 +1,8 @@
 package com.example.Bank_Account_Toy.ui.model.response;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.Date;
 
+//Model to convert Java return Object to JSON  for get accounts by type  route
 public class AccountsByTypeResponseModel {
     private String userId;
     private String accountType;
