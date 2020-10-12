@@ -4,16 +4,16 @@ An REST API simulating some bank client features, like create account,
 get account balance, get account info by type, make transfer and deposits to your accounts
 
 # Account types
-• Checking account (functions as a reference account for the savings account)
-• Savings account
-• Private loan account
+ - Checking account (functions as a reference account for the savings account)
+ - Savings account
+ - Private loan account
 Every account has an IBAN assigned and should be referenced by this.
 
 # Account rights
-Checking account - transferring money from and to any account is possible
-Savings account - transferring money from any account is possible. Only transferring
+ - Checking account - transferring money from and to any account is possible
+ - Savings account - transferring money from any account is possible. Only transferring
 money from the savings account to the reference account (checking account) is possible.
-Private loan account - transferring money from any account is possible. Withdrawal is not
+ - Private loan account - transferring money from any account is possible. Withdrawal is not
 possible.
 
 
