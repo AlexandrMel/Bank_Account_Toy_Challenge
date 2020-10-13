@@ -52,7 +52,7 @@ Run it using the terminal with the command "java -jar PACKAGE_NAME"
 # ENDPOINTS
 
 Here are examples how to interact with the API.
-
+Change the settings in application.properties accordingly
 Change the base URL according to the actual URL and adjust the port if needed 
  * (application.properties -> server.port =YOUR_PORT)
 
